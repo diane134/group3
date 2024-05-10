@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diane IRADUKUNDA Game</title>
+    <style>
+        body {
+         background-color: blue;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            background-color: brown;
+            margin-top: 50px;
+        }
+        .input-field {
+            margin-bottom: 20px;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>Diane IRADUKUNDA Game</h1>
+            <div class="input-field">
+                <label for="guessInput">Enter your guess (1-10):</label>
+                <input type="number" id="guessInput" v-model="userGuess">
+            </div>
+            <button @click="checkGuess">Check Guess</button>
+            <div class="result">
+                <p v-if="result === 'correct'">Congratulations! You guessed the correct number!</p>
+                <p v-else-if="result === 'high'">Your guess is too high. Try again!</p>
+                <p v-else-if="result === 'low'">Your guess is too low. Try again!</p>
+                <p v-else-if="result === 'invalid'">Please enter a valid number between 1 and 100.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                randomNumber: Math.floor(Math.random() * 10) + 1,
+                userGuess: '',
+                result: ''
+            },
+            methods: {
+                checkGuess() {
+                    const guess = parseInt(this.userGuess);
+                    if (isNaN(guess) || guess < 1 || guess > 10) {
+                        this.result = 'invalid';
+                    } else if (guess === this.randomNumber) {
+                        this.result = 'correct';
+                    } else if (guess < this.randomNumber) {
+                        this.result = 'low';
+                    } else {
+                        this.result = 'high';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
